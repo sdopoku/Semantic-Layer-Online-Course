@@ -1,9 +1,11 @@
--- metricflow_time_spine.sql
---for BQ adapters use "DATE('01/01/2000','mm/dd/yyyy')"
+-- filename: metricflow_time_spine.sql
+-- BigQuery supports DATE() instead of TO_DATE(). Use this model if you're using BigQuery
+{{config(materialized='table')}}
 with days as (
-    {{dbt_utils.date_spine('day'
-    , "to_date('01/01/2000','mm/dd/yyyy')"
-    , "to_date('01/01/2027','mm/dd/yyyy')"
+    {{dbt.date_spine(
+        'day',
+        "DATE(2000,01,01)",
+        "DATE(2030,01,01)"
     )
     }}
 ),
